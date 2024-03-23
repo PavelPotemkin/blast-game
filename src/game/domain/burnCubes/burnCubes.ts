@@ -1,7 +1,7 @@
-import { copyBoard, setCellByCoords } from "src/game/utils";
-import { GameBoard, GameCubes } from "src/game/types";
+import { copyBoard, setCellByCoords } from "../../utils";
+import { GameBoard, GameBoardFilled, GameCubes } from "../../types";
 
-export const burnCubes = (board: GameBoard, cubes: GameCubes) => {
+export const burnCubes = (board: GameBoardFilled, cubes: GameCubes) => {
   const burnedCubes = [];
   const boardCopy = copyBoard(board);
 
@@ -12,6 +12,6 @@ export const burnCubes = (board: GameBoard, cubes: GameCubes) => {
 
   return {
     burnedCubes,
-    board: boardCopy,
+    board: boardCopy as GameBoard,
   };
 };

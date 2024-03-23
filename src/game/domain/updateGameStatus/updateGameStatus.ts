@@ -1,11 +1,16 @@
-import { GameBoard, GameConfig, GameScore, GameStatus } from "../../types";
+import {
+  GameBoardFilled,
+  GameConfig,
+  GameScore,
+  GameStatus,
+} from "../../types";
 import { checkIsWin } from "../checkIsWin";
 import { GAME_STATUSES } from "../../constants";
 import { checkHasMoves } from "../checkHasMoves";
 
 export const updateGameStatus = (
   config: GameConfig,
-  board: GameBoard,
+  board: GameBoardFilled,
   score: GameScore,
   scoresToWin: GameScore,
   status: GameStatus,

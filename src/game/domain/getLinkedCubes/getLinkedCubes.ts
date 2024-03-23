@@ -1,6 +1,6 @@
 import {
-  GameBoard,
-  GameBoardCubeId,
+  GameBoardFilled,
+  GameCubeId,
   GameCellCoords,
   GameCubeColor,
   GameCubes,
@@ -8,16 +8,16 @@ import {
 import { getCellByCoords } from "../../utils";
 
 export const getLinkedCubes = (
-  board: GameBoard,
+  board: GameBoardFilled,
   coords: GameCellCoords,
   cubeColor: GameCubeColor,
-  checkedCubes: Array<GameBoardCubeId>,
+  checkedCubes: Array<GameCubeId>,
 ) => {
   const getLinkedCubes = (
-    board: GameBoard,
+    board: GameBoardFilled,
     coords: GameCellCoords,
     cubeColor: GameCubeColor,
-    checkedCubes: Array<GameBoardCubeId>,
+    checkedCubes: Array<GameCubeId>,
   ) => {
     const linkedCubes: GameCubes = [];
 

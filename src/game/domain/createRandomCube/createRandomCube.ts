@@ -1,5 +1,5 @@
 import { getRandomInt } from "../../utils";
-import { GameBoardCubeId, GameCellCoords, GameCubeColor } from "../../types";
+import { GameCubeId, GameCellCoords, GameCubeColor } from "../../types";
 
 let cubeIdx = 0;
 
@@ -12,7 +12,7 @@ export const createRandomCube = (
   };
 
   return {
-    id: `${cubeIdx++}` as GameBoardCubeId,
+    id: `${cubeIdx++}` as GameCubeId,
     color: getRandomColor(avialableCubesColors),
     coords,
   };

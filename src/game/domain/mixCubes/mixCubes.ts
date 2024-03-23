@@ -1,9 +1,9 @@
 import { getRandomInt, getCellByCoords } from "../../utils";
-import { GameBoard, GameConfig } from "../../types";
+import { GameBoardFilled, GameConfig } from "../../types";
 
-export const mixCubes = (config: GameConfig, board: GameBoard) => {
+export const mixCubes = (config: GameConfig, board: GameBoardFilled) => {
   const { boardCols, boardRows } = config;
-  const newBoard: GameBoard = [];
+  const newBoard: GameBoardFilled = [];
 
   const avialableCoords = Array.from(
     {

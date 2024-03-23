@@ -1,9 +1,9 @@
 import { getCellByCoords } from "src/game/utils";
-import { GameCubes, GameCellCoords, GameBoard } from "../../types";
+import { GameCubes, GameCellCoords, GameBoardFilled } from "../../types";
 import { getLinkedCubes } from "../getLinkedCubes";
 
 export const getCubesChain = (
-  board: GameBoard,
+  board: GameBoardFilled,
   coords: GameCellCoords,
 ): GameCubes => {
   const cube = getCellByCoords(board, coords);

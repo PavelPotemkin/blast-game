@@ -1,9 +1,9 @@
 import { getCellByCoords } from "src/game/utils";
-import { GameBoard, GameBoardCubeId, GameConfig } from "../../types";
+import { GameBoardFilled, GameCubeId, GameConfig } from "../../types";
 import { getLinkedCubes } from "../getLinkedCubes";
 
-export const checkHasMoves = (config: GameConfig, board: GameBoard) => {
-  const checkedCubes: Array<GameBoardCubeId> = [];
+export const checkHasMoves = (config: GameConfig, board: GameBoardFilled) => {
+  const checkedCubes: Array<GameCubeId> = [];
 
   const { boardCols, boardRows, minChainLength } = config;
 

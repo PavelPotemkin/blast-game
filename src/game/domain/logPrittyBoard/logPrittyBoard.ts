@@ -1,6 +1,6 @@
-import { GameBoard } from "src/game/types";
+import { GameBoardFilled } from "src/game/types";
 
-export const logPrittyBoard = (board: GameBoard) => {
+export const logPrittyBoard = (board: GameBoardFilled) => {
   const cellStrLen = 6;
   console.log(
     board.map((row) =>

@@ -1,10 +1,10 @@
-import { GameBoard, GameCellCoords, GameConfig } from "src/game/types";
+import { GameBoardFilled, GameCellCoords, GameConfig } from "src/game/types";
 import { getCubesChain } from "../getCubesChain";
 import { burnCubes } from "../burnCubes";
 
 export const tryBurnCubes = (
   config: GameConfig,
-  board: GameBoard,
+  board: GameBoardFilled,
   coords: GameCellCoords,
 ) => {
   const { minChainLength } = config;

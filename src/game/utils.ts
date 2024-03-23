@@ -1,18 +1,21 @@
-import { GameBoard, GameCellCoords, GameCube } from "./types";
+import { GameBoardFilled, GameCellCoords, GameCube } from "./types";
 
-export const getCellByCoords = (board: GameBoard, coords: GameCellCoords) => {
+export const getCellByCoords = (
+  board: GameBoardFilled,
+  coords: GameCellCoords,
+) => {
   return board[coords.y]?.[coords.x] || null;
 };
 
 export const setCellByCoords = (
-  board: GameBoard,
+  board: GameBoardFilled,
   coords: GameCellCoords,
   maybeCube: GameCube | null,
 ) => {
   board[coords.y][coords.x] = maybeCube;
 };
 
-export const copyBoard = (board: GameBoard) => {
+export const copyBoard = (board: GameBoardFilled) => {
   return JSON.parse(JSON.stringify(board));
 };
 

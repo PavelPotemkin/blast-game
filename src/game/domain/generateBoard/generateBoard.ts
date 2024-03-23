@@ -1,12 +1,12 @@
-import { GameBoard, GameConfig, GameCubeColor } from "../../types";
+import { GameBoardFilled, GameConfig, GameCubeColor } from "../../types";
 import { createRandomCube } from "../createRandomCube";
 
 export const generateBoard = (
   config: GameConfig,
   avialableCubesColors: Array<GameCubeColor>,
-): GameBoard => {
+): GameBoardFilled => {
   const { boardRows, boardCols } = config;
-  const board: GameBoard = [];
+  const board: GameBoardFilled = [];
 
   for (let row = 0; row < boardRows; row++) {
     board[row] = [];

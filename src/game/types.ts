@@ -1,3 +1,4 @@
+import { Branded } from "../types";
 import { GAME_CUBES, GAME_STATUSES } from "./constants";
 
 export interface GameConfigParams {
@@ -12,7 +13,7 @@ export type GameCubeColor = (typeof GAME_CUBES)[keyof typeof GAME_CUBES];
 
 export type GameStatus = (typeof GAME_STATUSES)[keyof typeof GAME_STATUSES];
 
-export type GameBoardCubeId = Branded<string, "GameBoardCubeId">;
+export type GameCubeId = Branded<string, "GameBoardCubeId">;
 
 export interface GameCellCoords {
   x: number;
@@ -20,7 +21,7 @@ export interface GameCellCoords {
 }
 
 export interface GameCube {
-  id: GameBoardCubeId;
+  id: GameCubeId;
   color: GameCubeColor;
   coords: GameCellCoords;
 }
@@ -35,9 +36,11 @@ export interface GameConfig {
 
 export type GameCubes = Array<GameCube>;
 
-export type TGameBoardCell = GameCube | null;
+export type GameBoardCell = GameCube | null;
 
-export type GameBoard = Array<Array<GameCube>>;
+export type GameBoardFilled = Array<Array<GameCube>>;
+
+export type GameBoard = Array<Array<GameBoardCell>>;
 
 export type GameBurnedCubes = Array<GameCube>;
 
@@ -53,7 +56,7 @@ export type GameFalledCubes = Array<GameFalledCube>;
 
 export interface GameStore {
   config: GameConfig;
-  board: GameBoard;
+  board: GameBoardFilled;
   score: number;
   status: GameStatus;
   avialableCubes: Array<GameCubeColor>;

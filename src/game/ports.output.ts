@@ -1,7 +1,7 @@
 import {
   GameCellCoords,
   GameCube,
-  GameBoard,
+  GameBoardFilled,
   GameCubeColor,
   GameConfig,
   GameStatus,
@@ -12,8 +12,8 @@ export type SaveCellByCoords = (
   coords: GameCellCoords,
   maybeCube: GameCube | null,
 ) => void;
-export type ReadBoard = () => GameBoard;
-export type SaveBoard = (board: GameBoard) => void;
+export type ReadBoard = () => GameBoardFilled;
+export type SaveBoard = (board: GameBoardFilled) => void;
 export type ReadConfig = () => GameConfig;
 export type SaveConfig = (config: GameConfig) => void;
 export type SaveAvialableCubesColors = (
