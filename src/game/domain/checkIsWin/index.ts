@@ -1,0 +1,1 @@
+export { checkIsWin } from "./checkIsWin";

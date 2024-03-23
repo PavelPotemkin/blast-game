@@ -15,9 +15,5 @@
     "plugins": [
         "@typescript-eslint",
         "prettier"
-    ],
-    "rules": {
-        "no-undef": "off",
-        "no-unused-vars": "off"
-    }
+    ]
 }

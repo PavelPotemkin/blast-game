@@ -1,0 +1,1 @@
+export { checkHasMoves } from "./checkHasMoves";

@@ -1,0 +1,1 @@
+export { getUpdateScore } from "./getUpdateScore";

@@ -1,0 +1,1 @@
+export { generateBoard } from "./generateBoard";

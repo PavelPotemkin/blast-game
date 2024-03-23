@@ -1,0 +1,1 @@
+export { updateAvialableCubesColors } from "./updateAvialableCubesColors";

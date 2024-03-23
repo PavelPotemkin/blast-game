@@ -1,4 +1,4 @@
-import { init } from "./game";
+import init from "./init";
 import "./style.css";
 
 if (document.readyState === "loading") {

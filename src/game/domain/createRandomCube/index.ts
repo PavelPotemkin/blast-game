@@ -1,0 +1,1 @@
+export { createRandomCube } from "./createRandomCube";

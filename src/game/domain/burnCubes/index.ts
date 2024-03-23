@@ -1,0 +1,1 @@
+export { burnCubes } from "./burnCubes";

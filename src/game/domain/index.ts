@@ -1,0 +1,16 @@
+export { createRandomCube } from "./createRandomCube";
+export { generateBoard } from "./generateBoard";
+export { getLinkedCubes } from "./getLinkedCubes";
+export { getCubesChain } from "./getCubesChain";
+export { burnCubes } from "./burnCubes";
+export { fallCubes } from "./fallCubes";
+export { fillEmptyCells } from "./fillEmptyCells";
+export { checkHasMoves } from "./checkHasMoves";
+export { mixCubes } from "./mixCubes";
+export { createConfig } from "./createConfig";
+export { updateAvialableCubesColors } from "./updateAvialableCubesColors";
+export { tryBurnCubes } from "./tryBurnCudes";
+export { getUpdateScore } from "./getUpdateScore";
+export { checkIsWin } from "./checkIsWin";
+export { updateGameStatus } from "./updateGameStatus";
+export { logPrittyBoard } from "./logPrittyBoard";

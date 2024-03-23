@@ -1,0 +1,1 @@
+export { getLinkedCubes } from "./getLinkedCubes";
