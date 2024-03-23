@@ -3,12 +3,16 @@
         "outDir": "./dist/",
         "noImplicitAny": false,
         "sourceMap": true,
-        "module": "ES6",
+        "module": "ESNext",
+        "lib": ["ESNext", "DOM"],
         "target": "ES5",
         "moduleResolution": "node",
         "paths": {
-            "game/*": ["./src/game/*"],
+            "modules/*": ["./src/modules/*"],
             "src/*": ["./src/*"]
-        }
+        },
+        "types": [
+            "./src/types.d.ts"
+        ]
     }
 }
