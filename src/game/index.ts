@@ -1,6 +1,3 @@
-import { clickCell, startGame } from "./application";
+import { initUi } from "./ui";
 
-export default {
-  clickCell,
-  startGame,
-};
+export default { initUi };

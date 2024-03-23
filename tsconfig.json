@@ -9,9 +9,6 @@
         "moduleResolution": "node",
         "paths": {
             "src/*": ["./src/*"]
-        },
-        "types": [
-            "./src/types.d.ts"
-        ]
+        }
     }
 }
