@@ -15,12 +15,12 @@ import { GamePanelContainer } from "./gamePanel";
 import { GameBoardContainer } from "./gameBoard";
 
 export class Game {
-  app: Application;
-  mainContainer: Container;
+  private app: Application;
+  private mainContainer: Container;
 
-  editable: boolean = false;
-  board: GameBoard = [];
-  avialableCubesColors: Array<GameCubeColor> = [
+  private editable: boolean = false;
+  private board: GameBoard = [];
+  private avialableCubesColors: Array<GameCubeColor> = [
     GAME_CUBES.RED,
     GAME_CUBES.GREEN,
     GAME_CUBES.BLUE,
@@ -28,15 +28,18 @@ export class Game {
     GAME_CUBES.PURPLE,
   ];
 
-  score: number;
-  status: GameStatus;
-  config: GameConfig = {
+  private score: number;
+  private status: GameStatus;
+  private config: GameConfig = {
     boardRows: 9,
     boardCols: 9,
     cubeColorsCount: 5,
     minChainLength: 3,
     scoresToWin: 50,
+    countdownSeconds: 60,
   };
+
+  private countdownSeconds: number = this.config.countdownSeconds;
 
   private startGame: StartGame;
   private clickCell: ClickCell;
@@ -87,7 +90,9 @@ export class Game {
     this.startGame();
 
     this.renderInitialBoard();
-    this.renderScore();
+    this.renderInitialPanel();
+
+    this.startTimer();
   }
 
   async init() {
@@ -143,6 +148,19 @@ export class Game {
     this.editable = true;
   }
 
+  private startTimer() {
+    this.app.ticker.add((ticker) => {
+      this.renderTimer();
+
+      if (this.leftSeconds <= 0) {
+        this.app.ticker.stop();
+        this.editable = false;
+      }
+
+      this.countdownSeconds -= ticker.deltaTime / 100;
+    });
+  }
+
   private renderInitialBoard() {
     this.gameBoardContainer.renderCubes(
       this.board,
@@ -166,8 +184,20 @@ export class Game {
     await this.gameBoardContainer.renderFalled(falled);
   }
 
+  private renderInitialPanel() {
+    this.panelScoreContainer.render(this.score, this.config.countdownSeconds);
+  }
+
   private renderScore() {
     this.panelScoreContainer.renderScore(this.score);
+  }
+
+  private renderTimer() {
+    this.panelScoreContainer.renderTimer(this.leftSeconds);
+  }
+
+  private get leftSeconds() {
+    return Math.max(0, Math.round(this.countdownSeconds));
   }
 
   private async loadAssets() {

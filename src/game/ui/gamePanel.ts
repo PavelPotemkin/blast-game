@@ -2,11 +2,16 @@ import { Assets, Text, Container, Sprite, Graphics } from "pixi.js";
 import { ASSETS } from "../constants";
 
 export class GamePanelContainer extends Container {
+  panelScoreContainer: Container;
+  panelTimerContainer: Container;
+
   constructor(private options: { width: number; height: number }) {
     super();
+    this.panelScoreContainer = new Container();
+    this.panelTimerContainer = new Container();
   }
 
-  renderScore(score: number) {
+  render(score: number, time: number) {
     const panelScoreSize = this.options.width;
     this.setSize(panelScoreSize, panelScoreSize);
 
@@ -34,6 +39,26 @@ export class GamePanelContainer extends Container {
       panelScoreSize - 80 - 30,
     );
 
+    const panelTimerScoreWrapper = new Graphics()
+      .roundRect(0, 0, 120, 120, 120)
+      .fill("#C4398F");
+    panelTimerScoreWrapper.position.set(panelScoreSize / 2 - 60, 40);
+
+    this.addChild(panelScoreSprite);
+    this.addChild(panelScoreScoreWrapper);
+    this.addChild(panelScoreScoreTitle);
+    this.addChild(panelTimerScoreWrapper);
+
+    this.addChild(this.panelTimerContainer);
+    this.addChild(this.panelScoreContainer);
+
+    this.renderScore(score);
+    this.renderTimer(time);
+  }
+
+  renderScore(score: number) {
+    this.panelScoreContainer.removeChildren();
+
     const panelScoreScoreValue = new Text({
       text: score,
       style: {
@@ -43,13 +68,29 @@ export class GamePanelContainer extends Container {
       },
     });
     panelScoreScoreValue.position.set(
-      (panelScoreSize - panelScoreScoreValue.width) / 2,
-      panelScoreSize - 80,
+      (this.options.width - panelScoreScoreValue.width) / 2,
+      this.options.width - 80,
     );
 
-    this.addChild(panelScoreSprite);
-    this.addChild(panelScoreScoreWrapper);
-    this.addChild(panelScoreScoreTitle);
-    this.addChild(panelScoreScoreValue);
+    this.panelScoreContainer.addChild(panelScoreScoreValue);
+  }
+
+  renderTimer(time: number) {
+    this.panelTimerContainer.removeChildren();
+
+    const panelTimerValue = new Text({
+      text: time,
+      style: {
+        fontFamily: "Arial",
+        fontSize: 70,
+        fill: "white",
+      },
+    });
+    panelTimerValue.position.set(
+      (this.options.width - panelTimerValue.width) / 2,
+      60,
+    );
+
+    this.panelTimerContainer.addChild(panelTimerValue);
   }
 }

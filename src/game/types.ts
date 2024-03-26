@@ -32,6 +32,7 @@ export interface GameConfig {
   cubeColorsCount: number;
   minChainLength: number;
   scoresToWin: number;
+  countdownSeconds: number;
 }
 
 export type GameCubes = Array<GameCube>;
