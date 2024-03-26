@@ -24,3 +24,5 @@ jobs:
       with:
         folder: dist
 
+permissions:
+  contents: write
