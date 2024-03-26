@@ -8,7 +8,7 @@ export const createRandomCube = (
   avialableCubesColors: Array<GameCubeColor>,
 ) => {
   const getRandomColor = (colors: Array<GameCubeColor>): GameCubeColor => {
-    return colors[getRandomInt(0, colors.length - 1)];
+    return colors[getRandomInt(0, colors.length)];
   };
 
   return {

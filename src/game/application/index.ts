@@ -1,2 +1,2 @@
-export { startGame } from "./startGame";
-export { clickCell } from "./clickCell";
+export { createStartGame } from "./startGame";
+export { createClickCell } from "./clickCell";

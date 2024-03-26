@@ -3,7 +3,6 @@ import {
   fallCubes,
   fillEmptyCells,
   getUpdateScore,
-  logPrittyBoard,
   mixCubes,
   tryBurnCubes,
   updateGameStatus,
@@ -47,8 +46,6 @@ export const createClickCell =
     const board = readBoard();
     const score = readScore();
 
-    logPrittyBoard(board);
-
     const maybeBurnedInfo = tryBurnCubes(config, board, coords);
     if (!maybeBurnedInfo) {
       console.log("[DEBUG]: no cubes to burn");
@@ -58,21 +55,24 @@ export const createClickCell =
     const { burnedCubes, board: boardWithBurned } = maybeBurnedInfo;
     const updatedScore = getUpdateScore(burnedCubes, score);
 
-    const { falledCubes, board: falledBoard } = fallCubes(
-      config,
-      boardWithBurned,
-    );
+    const {
+      falledCubes,
+      board: falledBoard,
+      boardWithoutMoved,
+    } = fallCubes(config, boardWithBurned);
 
     const avialableCubesColors = readAvialableCubesColors();
 
-    const { newCubes, board: filledBoard } = fillEmptyCells(
-      falledBoard,
-      avialableCubesColors,
-    );
+    const {
+      newCubes,
+      board: filledBoard,
+      falledNewCubes,
+    } = fillEmptyCells(falledBoard, avialableCubesColors);
 
     const hasMoves = checkHasMoves(config, filledBoard);
 
     const updatedBoard = hasMoves ? filledBoard : mixCubes(config, filledBoard);
+    const mixed = !hasMoves;
 
     const status = readStatus();
     const updatedStatus = updateGameStatus(
@@ -87,18 +87,17 @@ export const createClickCell =
     saveBoard(updatedBoard);
     saveStatus(updatedStatus);
 
-    logPrittyBoard(updatedBoard);
-
-    console.log("[DEBUG]: click cell", {
-      coords,
+    return {
       burnedCubes,
       falledCubes,
-      newCubes,
-      updatedScore,
-      board,
       boardWithBurned,
       falledBoard,
+      boardWithoutMoved,
+      mixed,
       filledBoard,
-      updatedBoard,
-    });
+      newCubes,
+      updatedScore,
+      board: updatedBoard,
+      falledNewCubes,
+    };
   };

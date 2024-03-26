@@ -8,7 +8,6 @@ import {
   ReadConfig,
 } from "../../ports.output";
 import { StartGame } from "../../ports.input";
-import { readConfig } from "src/game/store";
 
 interface Deps {
   saveAvialableCubesColors: SaveAvialableCubesColors;
@@ -24,14 +23,24 @@ export const createStartGame =
     saveBoard,
     saveScore,
     saveStatus,
+    readConfig,
   }: Deps): StartGame =>
   () => {
     const config = readConfig();
     const avialableCubesColors = updateAvialableCubesColors(config);
     const board = generateBoard(config, avialableCubesColors);
+    const score = 0;
+    const status = GAME_STATUSES.PLAYING;
 
     saveBoard(board);
     saveAvialableCubesColors(avialableCubesColors);
-    saveScore(0);
-    saveStatus(GAME_STATUSES.PLAYING);
+    saveScore(score);
+    saveStatus(status);
+
+    return {
+      board,
+      avialableCubesColors,
+      score,
+      status,
+    };
   };

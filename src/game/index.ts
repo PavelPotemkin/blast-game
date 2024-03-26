@@ -1,3 +1,1 @@
-import { initUi } from "./ui";
-
-export default { initUi };
+export { Game } from "./ui";

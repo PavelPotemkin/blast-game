@@ -5,6 +5,7 @@ export const fallCubes = (config: GameConfig, board: GameBoard) => {
   const falledCubes: GameFalledCubes = [];
   const { boardCols, boardRows } = config;
   const boardCopy = copyBoard(board);
+  const boardWithoutMoved = copyBoard(board);
 
   for (let y = boardRows - 1; y >= 0; y--) {
     for (let x = 0; x <= boardCols - 1; x++) {
@@ -18,13 +19,23 @@ export const fallCubes = (config: GameConfig, board: GameBoard) => {
           });
 
           if (temp) {
-            setCellByCoords(boardCopy, { x, y: fallY }, temp);
-            setCellByCoords(boardCopy, { x, y: checkY }, null);
+            const from = { x, y: checkY };
+            const to = { x, y: fallY };
+            const updatedCube = {
+              ...temp,
+              coords: to,
+            };
+
+            setCellByCoords(boardCopy, to, updatedCube);
+            setCellByCoords(boardCopy, from, null);
+
+            setCellByCoords(boardWithoutMoved, to, null);
+            setCellByCoords(boardWithoutMoved, from, null);
 
             falledCubes.push({
-              from: { x, y: checkY },
-              to: { x, y: fallY },
-              cube: temp,
+              from,
+              to,
+              cube: updatedCube,
             });
 
             fallY--;
@@ -37,5 +48,6 @@ export const fallCubes = (config: GameConfig, board: GameBoard) => {
   return {
     board: boardCopy,
     falledCubes,
+    boardWithoutMoved,
   };
 };

@@ -1,5 +1,9 @@
-import game from "./game";
+import { Game } from "./game";
 
-export default function init() {
-  game.initUi();
+export default async function init() {
+  const game = new Game();
+
+  await game.init();
+
+  game.start();
 }
