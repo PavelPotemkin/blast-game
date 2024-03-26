@@ -53,7 +53,7 @@ export class GamePanelContainer extends Container {
     this.addChild(this.panelScoreContainer);
 
     this.renderScore(score);
-    this.renderTimer(time);
+    this.renderMoves(time);
   }
 
   renderScore(score: number) {
@@ -75,22 +75,22 @@ export class GamePanelContainer extends Container {
     this.panelScoreContainer.addChild(panelScoreScoreValue);
   }
 
-  renderTimer(time: number) {
+  renderMoves(moves: number) {
     this.panelTimerContainer.removeChildren();
 
-    const panelTimerValue = new Text({
-      text: time,
+    const panelMovesValue = new Text({
+      text: moves,
       style: {
         fontFamily: "Arial",
         fontSize: 70,
         fill: "white",
       },
     });
-    panelTimerValue.position.set(
-      (this.options.width - panelTimerValue.width) / 2,
+    panelMovesValue.position.set(
+      (this.options.width - panelMovesValue.width) / 2,
       60,
     );
 
-    this.panelTimerContainer.addChild(panelTimerValue);
+    this.panelTimerContainer.addChild(panelMovesValue);
   }
 }

@@ -5,6 +5,8 @@ import {
   GameCubeColor,
   GameConfig,
   GameStatus,
+  GameMoves,
+  GameScore,
 } from "./types";
 
 export type ReadCellByCoords = (coords: GameCellCoords) => GameCube | null;
@@ -20,7 +22,9 @@ export type SaveAvialableCubesColors = (
   avialableCubes: Array<GameCubeColor>,
 ) => void;
 export type ReadAvialableCubesColors = () => Array<GameCubeColor>;
-export type ReadScore = () => number;
-export type SaveScore = (score: number) => void;
+export type ReadScore = () => GameScore;
+export type SaveScore = (score: GameScore) => void;
 export type ReadStatus = () => GameStatus;
 export type SaveStatus = (status: GameStatus) => void;
+export type ReadRemainingMoves = () => GameMoves;
+export type SaveRemainingMoves = (moves: GameMoves) => void;

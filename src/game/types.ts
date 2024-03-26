@@ -15,6 +15,10 @@ export type GameStatus = (typeof GAME_STATUSES)[keyof typeof GAME_STATUSES];
 
 export type GameCubeId = Branded<string, "GameBoardCubeId">;
 
+export type GameMoves = number;
+
+export type GameScore = number;
+
 export interface GameCellCoords {
   x: number;
   y: number;
@@ -32,7 +36,7 @@ export interface GameConfig {
   cubeColorsCount: number;
   minChainLength: number;
   scoresToWin: number;
-  countdownSeconds: number;
+  moveCount: number;
 }
 
 export type GameCubes = Array<GameCube>;
@@ -44,8 +48,6 @@ export type GameBoardFilled = Array<Array<GameCube>>;
 export type GameBoard = Array<Array<GameBoardCell>>;
 
 export type GameBurnedCubes = Array<GameCube>;
-
-export type GameScore = number;
 
 export interface GameFalledCube {
   from: GameCellCoords;

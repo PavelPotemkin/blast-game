@@ -14,3 +14,4 @@ export { getUpdateScore } from "./getUpdateScore";
 export { checkIsWin } from "./checkIsWin";
 export { updateGameStatus } from "./updateGameStatus";
 export { logPrittyBoard } from "./logPrittyBoard";
+export { updateRemainingMoves } from "./updateRemainingMoves";

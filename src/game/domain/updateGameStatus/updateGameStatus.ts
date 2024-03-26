@@ -1,6 +1,7 @@
 import {
   GameBoardFilled,
   GameConfig,
+  GameMoves,
   GameScore,
   GameStatus,
 } from "../../types";
@@ -14,10 +15,11 @@ export const updateGameStatus = (
   score: GameScore,
   scoresToWin: GameScore,
   status: GameStatus,
+  currentMoves: GameMoves,
 ): GameStatus => {
   if (checkIsWin(score, scoresToWin)) {
     return GAME_STATUSES.WIN;
-  } else if (!checkHasMoves(config, board)) {
+  } else if (!checkHasMoves(config, board) || currentMoves === 0) {
     return GAME_STATUSES.NO_MOVES;
   }
 

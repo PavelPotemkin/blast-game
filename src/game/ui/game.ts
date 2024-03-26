@@ -35,11 +35,11 @@ export class Game {
     boardCols: 9,
     cubeColorsCount: 5,
     minChainLength: 3,
-    scoresToWin: 50,
-    countdownSeconds: 60,
+    scoresToWin: 40,
+    moveCount: 10,
   };
 
-  private countdownSeconds: number = this.config.countdownSeconds;
+  private remainingMoves = this.config.moveCount;
 
   private startGame: StartGame;
   private clickCell: ClickCell;
@@ -71,6 +71,7 @@ export class Game {
       saveBoard: (board) => (this.board = board),
       saveScore: (score) => (this.score = score),
       saveStatus: (status) => (this.status = status),
+      saveRemainingMoves: (moves) => (this.remainingMoves = moves),
     });
 
     this.clickCell = createClickCell({
@@ -79,9 +80,11 @@ export class Game {
       readScore: () => this.score,
       readAvialableCubesColors: () => this.avialableCubesColors,
       readStatus: () => this.status,
+      readRemainingMoves: () => this.remainingMoves,
       saveBoard: (board) => (this.board = board),
       saveScore: (score) => (this.score = score),
       saveStatus: (status) => (this.status = status),
+      saveRemainingMoves: (moves) => (this.remainingMoves = moves),
     });
   }
 
@@ -91,8 +94,6 @@ export class Game {
 
     this.renderInitialBoard();
     this.renderInitialPanel();
-
-    this.startTimer();
   }
 
   async init() {
@@ -135,6 +136,7 @@ export class Game {
     this.editable = false;
 
     this.renderScore();
+    this.renderMoves();
 
     await this.renderBurnedBoard(result.burnedCubes, result.boardWithBurned);
 
@@ -146,33 +148,12 @@ export class Game {
     this.renderInitialBoard();
 
     if (result.status === GAME_STATUSES.WIN) {
-      this.stopTimer();
       window.alert("WIN");
     } else if (result.status === GAME_STATUSES.NO_MOVES) {
-      this.stopTimer();
       window.alert("NO_MOVES");
     } else {
       this.editable = true;
     }
-  }
-
-  private startTimer() {
-    this.app.ticker.add(this.timerCallback.bind(this));
-  }
-
-  private stopTimer() {
-    this.app.ticker.stop();
-  }
-
-  private timerCallback(ticker: Ticker) {
-    this.renderTimer();
-
-    if (this.leftSeconds <= 0) {
-      this.stopTimer();
-      this.editable = false;
-    }
-
-    this.countdownSeconds -= ticker.deltaTime / 100;
   }
 
   private renderInitialBoard() {
@@ -199,19 +180,15 @@ export class Game {
   }
 
   private renderInitialPanel() {
-    this.panelScoreContainer.render(this.score, this.config.countdownSeconds);
+    this.panelScoreContainer.render(this.score, this.remainingMoves);
   }
 
   private renderScore() {
     this.panelScoreContainer.renderScore(this.score);
   }
 
-  private renderTimer() {
-    this.panelScoreContainer.renderTimer(this.leftSeconds);
-  }
-
-  private get leftSeconds() {
-    return Math.max(0, Math.round(this.countdownSeconds));
+  private renderMoves() {
+    this.panelScoreContainer.renderMoves(this.remainingMoves);
   }
 
   private async loadAssets() {

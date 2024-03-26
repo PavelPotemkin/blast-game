@@ -6,6 +6,7 @@ import {
   SaveScore,
   SaveStatus,
   ReadConfig,
+  SaveRemainingMoves,
 } from "../../ports.output";
 import { StartGame } from "../../ports.input";
 
@@ -15,6 +16,7 @@ interface Deps {
   saveScore: SaveScore;
   saveStatus: SaveStatus;
   readConfig: ReadConfig;
+  saveRemainingMoves: SaveRemainingMoves;
 }
 
 export const createStartGame =
@@ -24,6 +26,7 @@ export const createStartGame =
     saveScore,
     saveStatus,
     readConfig,
+    saveRemainingMoves,
   }: Deps): StartGame =>
   () => {
     const config = readConfig();
@@ -36,6 +39,7 @@ export const createStartGame =
     saveAvialableCubesColors(avialableCubesColors);
     saveScore(score);
     saveStatus(status);
+    saveRemainingMoves(config.moveCount);
 
     return {
       board,

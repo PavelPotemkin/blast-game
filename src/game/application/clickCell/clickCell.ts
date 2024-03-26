@@ -6,6 +6,7 @@ import {
   mixCubes,
   tryBurnCubes,
   updateGameStatus,
+  updateRemainingMoves,
 } from "../../domain";
 import { ClickCell } from "../../ports.input";
 import {
@@ -17,6 +18,8 @@ import {
   ReadAvialableCubesColors,
   ReadStatus,
   SaveStatus,
+  SaveRemainingMoves,
+  ReadRemainingMoves,
 } from "../../ports.output";
 
 interface Deps {
@@ -28,6 +31,8 @@ interface Deps {
   readAvialableCubesColors: ReadAvialableCubesColors;
   readStatus: ReadStatus;
   saveStatus: SaveStatus;
+  readRemainingMoves: ReadRemainingMoves;
+  saveRemainingMoves: SaveRemainingMoves;
 }
 
 export const createClickCell =
@@ -40,6 +45,8 @@ export const createClickCell =
     readAvialableCubesColors,
     readStatus,
     saveStatus,
+    readRemainingMoves,
+    saveRemainingMoves,
   }: Deps): ClickCell =>
   (coords) => {
     const config = readConfig();
@@ -75,17 +82,23 @@ export const createClickCell =
     const mixed = !hasMoves;
 
     const status = readStatus();
+    const currentMoves = readRemainingMoves();
+
+    const updatedMoves = updateRemainingMoves(currentMoves);
+
     const updatedStatus = updateGameStatus(
       config,
       updatedBoard,
       updatedScore,
       config.scoresToWin,
       status,
+      updatedMoves,
     );
 
     saveScore(updatedScore);
     saveBoard(updatedBoard);
     saveStatus(updatedStatus);
+    saveRemainingMoves(updatedMoves);
 
     return {
       burnedCubes,
