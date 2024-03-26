@@ -1,5 +1,5 @@
-import { Application, Assets, Container } from "pixi.js";
-import { ASSETS, GAME_CUBES } from "../constants";
+import { Application, Assets, Container, Ticker } from "pixi.js";
+import { ASSETS, GAME_CUBES, GAME_STATUSES } from "../constants";
 import {
   GameBoard,
   GameBurnedCubes,
@@ -145,20 +145,34 @@ export class Game {
 
     this.renderInitialBoard();
 
-    this.editable = true;
+    if (result.status === GAME_STATUSES.WIN) {
+      this.stopTimer();
+      window.alert("WIN");
+    } else if (result.status === GAME_STATUSES.NO_MOVES) {
+      this.stopTimer();
+      window.alert("NO_MOVES");
+    } else {
+      this.editable = true;
+    }
   }
 
   private startTimer() {
-    this.app.ticker.add((ticker) => {
-      this.renderTimer();
+    this.app.ticker.add(this.timerCallback.bind(this));
+  }
 
-      if (this.leftSeconds <= 0) {
-        this.app.ticker.stop();
-        this.editable = false;
-      }
+  private stopTimer() {
+    this.app.ticker.stop();
+  }
 
-      this.countdownSeconds -= ticker.deltaTime / 100;
-    });
+  private timerCallback(ticker: Ticker) {
+    this.renderTimer();
+
+    if (this.leftSeconds <= 0) {
+      this.stopTimer();
+      this.editable = false;
+    }
+
+    this.countdownSeconds -= ticker.deltaTime / 100;
   }
 
   private renderInitialBoard() {

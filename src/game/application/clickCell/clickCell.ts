@@ -99,5 +99,6 @@ export const createClickCell =
       updatedScore,
       board: updatedBoard,
       falledNewCubes,
+      status: updatedStatus,
     };
   };

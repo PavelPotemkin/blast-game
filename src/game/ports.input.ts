@@ -27,4 +27,5 @@ export type ClickCell = (coords: GameCellCoords) => {
   mixed: boolean;
   boardWithoutMoved: GameBoard;
   falledNewCubes: GameFalledCubes;
+  status: GameStatus;
 } | null;
