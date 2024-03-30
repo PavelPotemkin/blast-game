@@ -6,6 +6,7 @@ import {
   GameCellCoords,
   GameCube,
   GameFalledCubes,
+  GameMixedBoard,
 } from "../types";
 
 export class GameBoardContainer extends Container {
@@ -109,6 +110,58 @@ export class GameBoardContainer extends Container {
     });
 
     return Promise.all(promises).then(() => {});
+  }
+
+  public async renderMixed(mixedBoard: GameMixedBoard) {
+    this.removeChildren();
+    this.renderBoardBg();
+
+    const promises = mixedBoard.map((mixedCube) => {
+      return new Promise((resolve) => {
+        const cubeSprite = this.createCube(mixedCube.cube);
+
+        const fromPosition = this.getCubePositionByCoords(mixedCube.from);
+        const toPosition = this.getCubePositionByCoords(mixedCube.to);
+
+        this.addChild(cubeSprite);
+        cubeSprite.position.set(fromPosition.x, fromPosition.y);
+
+        const animationLogic = (ticker: Ticker) => {
+          const startPosition = cubeSprite.position;
+
+          const diff = new Point(
+            toPosition.x - startPosition.x,
+            toPosition.y - startPosition.y,
+          );
+
+          if (diff.x === 0 && diff.y === 0) {
+            this.app.ticker.remove(animationLogic);
+            resolve("");
+          } else {
+            const perTick = 5;
+
+            const perTickX = fromPosition.x > toPosition.x ? -perTick : perTick;
+            const perTickY = fromPosition.y > toPosition.y ? -perTick : perTick;
+
+            const nextX = (fromPosition.x > toPosition.x ? Math.max : Math.min)(
+              startPosition.x + perTickX * ticker.deltaTime,
+              toPosition.x,
+            );
+
+            const nextY = (fromPosition.y > toPosition.y ? Math.max : Math.min)(
+              startPosition.y + perTickY * ticker.deltaTime,
+              toPosition.y,
+            );
+
+            cubeSprite.position.set(nextX, nextY);
+          }
+        };
+
+        this.app.ticker.add(animationLogic);
+      });
+    });
+
+    await Promise.all(promises).then(() => {});
   }
 
   private createCube(

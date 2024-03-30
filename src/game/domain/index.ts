@@ -6,7 +6,7 @@ export { burnCubes } from "./burnCubes";
 export { fallCubes } from "./fallCubes";
 export { fillEmptyCells } from "./fillEmptyCells";
 export { checkHasMoves } from "./checkHasMoves";
-export { mixCubes } from "./mixCubes";
+export { mixCubesIfNeed } from "./mixCubesIfNeed";
 export { createConfig } from "./createConfig";
 export { updateAvialableCubesColors } from "./updateAvialableCubesColors";
 export { tryBurnCubes } from "./tryBurnCudes";

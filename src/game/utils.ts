@@ -24,3 +24,6 @@ export function getRandomInt(min: number, max: number) {
   const maxFloored = Math.floor(max);
   return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
 }
+
+export const wait = (ms: number = 1000) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

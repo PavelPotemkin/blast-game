@@ -28,3 +28,4 @@ export type ReadStatus = () => GameStatus;
 export type SaveStatus = (status: GameStatus) => void;
 export type ReadRemainingMoves = () => GameMoves;
 export type SaveRemainingMoves = (moves: GameMoves) => void;
+export type ReadMixCount = () => number;

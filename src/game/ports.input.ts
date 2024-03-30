@@ -4,6 +4,7 @@ import {
   GameCellCoords,
   GameCubes,
   GameFalledCubes,
+  GameMixedBoard,
   GameScore,
   GameStatus,
 } from "./types";
@@ -24,8 +25,8 @@ export type ClickCell = (coords: GameCellCoords) => {
   falledCubes: GameFalledCubes;
   newCubes: GameCubes;
   updatedScore: GameScore;
-  mixed: boolean;
   boardWithoutMoved: GameBoard;
   falledNewCubes: GameFalledCubes;
   status: GameStatus;
+  mixedBoards: Array<GameMixedBoard>;
 } | null;

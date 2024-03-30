@@ -19,6 +19,8 @@ export type GameMoves = number;
 
 export type GameScore = number;
 
+export type GameMixCount = number;
+
 export interface GameCellCoords {
   x: number;
   y: number;
@@ -37,6 +39,7 @@ export interface GameConfig {
   minChainLength: number;
   scoresToWin: number;
   moveCount: number;
+  mixCount: number;
 }
 
 export type GameCubes = Array<GameCube>;
@@ -46,6 +49,12 @@ export type GameBoardCell = GameCube | null;
 export type GameBoardFilled = Array<Array<GameCube>>;
 
 export type GameBoard = Array<Array<GameBoardCell>>;
+
+export type GameMixedBoard = Array<{
+  from: GameCellCoords;
+  to: GameCellCoords;
+  cube: GameCube;
+}>;
 
 export type GameBurnedCubes = Array<GameCube>;
 

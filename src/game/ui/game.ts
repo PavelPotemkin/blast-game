@@ -7,12 +7,14 @@ import {
   GameConfig,
   GameCubeColor,
   GameFalledCubes,
+  GameMixedBoard,
   GameStatus,
 } from "../types";
 import { ClickCell, StartGame } from "../ports.input";
 import { createClickCell, createStartGame } from "../application";
 import { GamePanelContainer } from "./gamePanel";
 import { GameBoardContainer } from "./gameBoard";
+import { wait } from "../utils";
 
 export class Game {
   private app: Application;
@@ -34,9 +36,10 @@ export class Game {
     boardRows: 9,
     boardCols: 9,
     cubeColorsCount: 5,
-    minChainLength: 3,
-    scoresToWin: 40,
-    moveCount: 10,
+    minChainLength: 5,
+    scoresToWin: 30,
+    moveCount: 8,
+    mixCount: 2,
   };
 
   private remainingMoves = this.config.moveCount;
@@ -85,6 +88,7 @@ export class Game {
       saveScore: (score) => (this.score = score),
       saveStatus: (status) => (this.status = status),
       saveRemainingMoves: (moves) => (this.remainingMoves = moves),
+      readMixCount: () => this.config.mixCount,
     });
   }
 
@@ -145,13 +149,19 @@ export class Game {
       result.boardWithoutMoved,
     );
 
-    this.renderInitialBoard();
-
     if (result.status === GAME_STATUSES.WIN) {
       window.alert("WIN");
-    } else if (result.status === GAME_STATUSES.NO_MOVES) {
+      return;
+    }
+
+    if (result.mixedBoards.length) {
+      await this.renderMixedBoard(result.mixedBoards);
+    }
+
+    if (result.status === GAME_STATUSES.NO_MOVES) {
       window.alert("NO_MOVES");
     } else {
+      this.renderInitialBoard();
       this.editable = true;
     }
   }
@@ -177,6 +187,14 @@ export class Game {
   ) {
     this.gameBoardContainer.renderCubes(boardWithoutMoved);
     await this.gameBoardContainer.renderFalled(falled);
+  }
+
+  private async renderMixedBoard(mixedBoards: Array<GameMixedBoard>) {
+    for await (const mixedBoard of mixedBoards) {
+      await this.gameBoardContainer.renderMixed(mixedBoard);
+
+      await wait(200);
+    }
   }
 
   private renderInitialPanel() {

@@ -1,9 +1,8 @@
 import {
-  checkHasMoves,
   fallCubes,
   fillEmptyCells,
   getUpdateScore,
-  mixCubes,
+  mixCubesIfNeed,
   tryBurnCubes,
   updateGameStatus,
   updateRemainingMoves,
@@ -20,6 +19,7 @@ import {
   SaveStatus,
   SaveRemainingMoves,
   ReadRemainingMoves,
+  ReadMixCount,
 } from "../../ports.output";
 
 interface Deps {
@@ -33,6 +33,7 @@ interface Deps {
   saveStatus: SaveStatus;
   readRemainingMoves: ReadRemainingMoves;
   saveRemainingMoves: SaveRemainingMoves;
+  readMixCount: ReadMixCount;
 }
 
 export const createClickCell =
@@ -47,6 +48,7 @@ export const createClickCell =
     saveStatus,
     readRemainingMoves,
     saveRemainingMoves,
+    readMixCount,
   }: Deps): ClickCell =>
   (coords) => {
     const config = readConfig();
@@ -55,7 +57,6 @@ export const createClickCell =
 
     const maybeBurnedInfo = tryBurnCubes(config, board, coords);
     if (!maybeBurnedInfo) {
-      console.log("[DEBUG]: no cubes to burn");
       return null;
     }
 
@@ -76,10 +77,13 @@ export const createClickCell =
       falledNewCubes,
     } = fillEmptyCells(falledBoard, avialableCubesColors);
 
-    const hasMoves = checkHasMoves(config, filledBoard);
+    const mixCount = readMixCount();
 
-    const updatedBoard = hasMoves ? filledBoard : mixCubes(config, filledBoard);
-    const mixed = !hasMoves;
+    const { mixedBoards, updatedBoard } = mixCubesIfNeed(
+      config,
+      filledBoard,
+      mixCount,
+    );
 
     const status = readStatus();
     const currentMoves = readRemainingMoves();
@@ -106,9 +110,9 @@ export const createClickCell =
       boardWithBurned,
       falledBoard,
       boardWithoutMoved,
-      mixed,
       filledBoard,
       newCubes,
+      mixedBoards,
       updatedScore,
       board: updatedBoard,
       falledNewCubes,
