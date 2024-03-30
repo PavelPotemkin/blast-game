@@ -7,6 +7,7 @@ import {
   GameMixedBoard,
   GameScore,
   GameStatus,
+  GameSuperCubes,
 } from "./types";
 
 export type StartGame = () => {
@@ -22,6 +23,7 @@ export type ClickCell = (coords: GameCellCoords) => {
   falledBoard: GameBoard;
   filledBoard: GameBoard;
   burnedCubes: GameBurnedCubes;
+  superCubes: GameSuperCubes;
   falledCubes: GameFalledCubes;
   newCubes: GameCubes;
   updatedScore: GameScore;
@@ -29,4 +31,5 @@ export type ClickCell = (coords: GameCellCoords) => {
   falledNewCubes: GameFalledCubes;
   status: GameStatus;
   mixedBoards: Array<GameMixedBoard>;
+  boardBurnedWithSuper: GameBoard;
 } | null;

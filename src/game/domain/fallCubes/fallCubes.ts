@@ -1,5 +1,6 @@
 import { GameConfig, GameBoard, GameFalledCubes } from "../../types";
 import { copyBoard, getCellByCoords, setCellByCoords } from "../../utils";
+import { createCube } from "../createCube";
 
 export const fallCubes = (config: GameConfig, board: GameBoard) => {
   const falledCubes: GameFalledCubes = [];
@@ -21,10 +22,7 @@ export const fallCubes = (config: GameConfig, board: GameBoard) => {
           if (temp) {
             const from = { x, y: checkY };
             const to = { x, y: fallY };
-            const updatedCube = {
-              ...temp,
-              coords: to,
-            };
+            const updatedCube = createCube(to, temp.color, temp.type);
 
             setCellByCoords(boardCopy, to, updatedCube);
             setCellByCoords(boardCopy, from, null);

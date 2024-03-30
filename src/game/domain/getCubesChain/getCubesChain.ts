@@ -12,8 +12,8 @@ export const getCubesChain = (
     board,
     { x: coords.x, y: coords.y },
     cube.color,
-    [],
+    [cube.id],
   );
 
-  return linkedCubes;
+  return [...linkedCubes, cube];
 };

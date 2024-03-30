@@ -1,5 +1,5 @@
 import { Application, Assets, Container, Point, Sprite, Ticker } from "pixi.js";
-import { ASSETS } from "../constants";
+import { ASSETS, GAME_CUBES_TYPE } from "../constants";
 import {
   GameBoard,
   GameBurnedCubes,
@@ -7,6 +7,7 @@ import {
   GameCube,
   GameFalledCubes,
   GameMixedBoard,
+  GameSuperCubes,
 } from "../types";
 
 export class GameBoardContainer extends Container {
@@ -34,6 +35,7 @@ export class GameBoardContainer extends Container {
     board: GameBoard,
     callback?: (coords: GameCellCoords) => void,
   ) {
+    this.removeChildren();
     this.renderBoardBg();
 
     board.forEach((row, i) => {
@@ -64,6 +66,34 @@ export class GameBoardContainer extends Container {
             cubeSprite.height -= 0.1;
             cubeSprite.alpha -= 0.1 * ticker.deltaTime;
             cubeSprite.position.set(cubeSprite.x + 0.05, cubeSprite.y + 0.05);
+          }
+        };
+
+        this.app.ticker.add(animationLogic);
+      });
+    });
+
+    return Promise.all(promises).then(() => {});
+  }
+
+  public renderSuperCubes(superCubes: GameSuperCubes) {
+    const promises = superCubes.map((superCube) => {
+      return new Promise((resolve) => {
+        const cubeSprite = this.createCube(superCube);
+        this.addChild(cubeSprite);
+
+        const animationLogic = (ticker: Ticker) => {
+          if (cubeSprite.width >= this.cubeWidth * 1.3) {
+            this.removeChild(cubeSprite);
+            this.app.ticker.remove(animationLogic);
+            resolve("");
+          } else {
+            cubeSprite.width += 0.4 * ticker.deltaTime;
+            cubeSprite.height += 0.4 * ticker.deltaTime;
+            cubeSprite.position.set(
+              cubeSprite.x - 0.2 * ticker.deltaTime,
+              cubeSprite.y - 0.2 * ticker.deltaTime,
+            );
           }
         };
 
@@ -170,10 +200,15 @@ export class GameBoardContainer extends Container {
   ) {
     const texture = Assets.get(cube.color);
     const cubeSprite = new Sprite(texture);
+    const position = this.getCubePositionByCoords(cube.coords);
+
     cubeSprite.width = this.cubeWidth;
     cubeSprite.height = this.cubeHeight;
-    const position = this.getCubePositionByCoords(cube.coords);
     cubeSprite.position.set(position.x, position.y);
+
+    if (cube.type !== GAME_CUBES_TYPE.BASE) {
+      cubeSprite.alpha = 0.7;
+    }
 
     cubeSprite.eventMode = "static";
     cubeSprite.cursor = "pointer";

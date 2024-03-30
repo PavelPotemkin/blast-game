@@ -6,6 +6,14 @@ export const GAME_CUBES = {
   PURPLE: "purpleCube",
 } as const;
 
+export const GAME_CUBES_TYPE = {
+  BASE: "base",
+  COL: "col",
+  ROW: "row",
+  BOARD: "board",
+  RADIUS: "radius",
+} as const;
+
 export const GAME_STATUSES = {
   WIN: "win",
   NO_MOVES: "noMoves",

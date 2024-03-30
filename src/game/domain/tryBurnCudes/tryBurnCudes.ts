@@ -1,18 +1,24 @@
-import { GameBoardFilled, GameCellCoords, GameConfig } from "src/game/types";
+import { GameBoardFilled, GameConfig, GameCube } from "../../types";
 import { getCubesChain } from "../getCubesChain";
 import { burnCubes } from "../burnCubes";
+import { GAME_CUBES_TYPE } from "src/game/constants";
 
 export const tryBurnCubes = (
   config: GameConfig,
   board: GameBoardFilled,
-  coords: GameCellCoords,
+  clickedCube: GameCube,
 ) => {
   const { minChainLength } = config;
-  const cubesChain = getCubesChain(board, coords);
 
-  if (cubesChain.length < minChainLength) {
+  const cubesChain = getCubesChain(board, clickedCube.coords);
+
+  const needBurn =
+    cubesChain.length >= minChainLength ||
+    clickedCube.type !== GAME_CUBES_TYPE.BASE;
+
+  if (!needBurn) {
     return null;
   }
 
-  return burnCubes(board, cubesChain);
+  return burnCubes(config, board, cubesChain);
 };

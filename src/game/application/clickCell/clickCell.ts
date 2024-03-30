@@ -1,9 +1,11 @@
+import { getCellByCoords } from "src/game/utils";
 import {
   fallCubes,
   fillEmptyCells,
   getUpdateScore,
   mixCubesIfNeed,
   tryBurnCubes,
+  tryCreateSuperCube,
   updateGameStatus,
   updateRemainingMoves,
 } from "../../domain";
@@ -21,6 +23,7 @@ import {
   ReadRemainingMoves,
   ReadMixCount,
 } from "../../ports.output";
+import { GAME_CUBES_TYPE } from "src/game/constants";
 
 interface Deps {
   readScore: ReadScore;
@@ -55,19 +58,31 @@ export const createClickCell =
     const board = readBoard();
     const score = readScore();
 
-    const maybeBurnedInfo = tryBurnCubes(config, board, coords);
+    const clickedCube = getCellByCoords(board, coords);
+
+    const maybeBurnedInfo = tryBurnCubes(config, board, clickedCube);
     if (!maybeBurnedInfo) {
       return null;
     }
 
+    const isBaseCube = clickedCube.type === GAME_CUBES_TYPE.BASE;
+
     const { burnedCubes, board: boardWithBurned } = maybeBurnedInfo;
     const updatedScore = getUpdateScore(burnedCubes, score);
+
+    const { board: boardBurnedWithSuper, superCubes } = tryCreateSuperCube(
+      config,
+      coords,
+      burnedCubes,
+      boardWithBurned,
+      isBaseCube,
+    );
 
     const {
       falledCubes,
       board: falledBoard,
       boardWithoutMoved,
-    } = fallCubes(config, boardWithBurned);
+    } = fallCubes(config, boardBurnedWithSuper);
 
     const avialableCubesColors = readAvialableCubesColors();
 
@@ -106,8 +121,10 @@ export const createClickCell =
 
     return {
       burnedCubes,
+      superCubes,
       falledCubes,
       boardWithBurned,
+      boardBurnedWithSuper,
       falledBoard,
       boardWithoutMoved,
       filledBoard,

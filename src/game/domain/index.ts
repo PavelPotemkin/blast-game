@@ -1,4 +1,6 @@
+export { createCube } from "./createCube";
 export { createRandomCube } from "./createRandomCube";
+export { tryCreateSuperCube } from "./tryCreateSuperCube";
 export { generateBoard } from "./generateBoard";
 export { getLinkedCubes } from "./getLinkedCubes";
 export { getCubesChain } from "./getCubesChain";

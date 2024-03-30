@@ -1,4 +1,4 @@
-import { Application, Assets, Container, Ticker } from "pixi.js";
+import { Application, Assets, Container } from "pixi.js";
 import { ASSETS, GAME_CUBES, GAME_STATUSES } from "../constants";
 import {
   GameBoard,
@@ -9,6 +9,7 @@ import {
   GameFalledCubes,
   GameMixedBoard,
   GameStatus,
+  GameSuperCubes,
 } from "../types";
 import { ClickCell, StartGame } from "../ports.input";
 import { createClickCell, createStartGame } from "../application";
@@ -36,10 +37,12 @@ export class Game {
     boardRows: 9,
     boardCols: 9,
     cubeColorsCount: 5,
-    minChainLength: 5,
-    scoresToWin: 30,
-    moveCount: 8,
+    minChainLength: 4,
+    scoresToWin: 200,
+    moveCount: 20,
     mixCount: 2,
+    cubesToSuper: 5,
+    superBombRadius: 2,
   };
 
   private remainingMoves = this.config.moveCount;
@@ -144,6 +147,8 @@ export class Game {
 
     await this.renderBurnedBoard(result.burnedCubes, result.boardWithBurned);
 
+    await this.renderSuperCubes(result.superCubes);
+
     await this.renderFalledBoard(
       result.falledCubes.concat(result.falledNewCubes),
       result.boardWithoutMoved,
@@ -179,6 +184,10 @@ export class Game {
   ) {
     this.gameBoardContainer.renderCubes(boardWithoutBurned);
     await this.gameBoardContainer.renderBurned(burned);
+  }
+
+  private async renderSuperCubes(superCubes: GameSuperCubes) {
+    await this.gameBoardContainer.renderSuperCubes(superCubes);
   }
 
   private async renderFalledBoard(

@@ -6,6 +6,7 @@ import {
   GameMixedBoard,
 } from "../../types";
 import { checkHasMoves } from "../checkHasMoves";
+import { createCube } from "../createCube";
 
 export const mixCubesIfNeed = (
   config: GameConfig,
@@ -58,10 +59,7 @@ export const mixCubesIfNeed = (
         const cube = getCellByCoords(prevBoard, fromCoords);
         const toCoords = randomCoords;
 
-        const newCube = {
-          ...cube,
-          coords: toCoords,
-        };
+        const newCube = createCube(toCoords, cube.color, cube.type);
 
         newBoard[toCoords.y][toCoords.x] = newCube;
         newMixedBoard.push({

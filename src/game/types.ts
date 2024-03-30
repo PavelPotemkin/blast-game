@@ -1,5 +1,5 @@
 import { Branded } from "../types";
-import { GAME_CUBES, GAME_STATUSES } from "./constants";
+import { GAME_CUBES, GAME_CUBES_TYPE, GAME_STATUSES } from "./constants";
 
 export interface GameConfigParams {
   boardRows: number;
@@ -12,6 +12,9 @@ export interface GameConfigParams {
 export type GameCubeColor = (typeof GAME_CUBES)[keyof typeof GAME_CUBES];
 
 export type GameStatus = (typeof GAME_STATUSES)[keyof typeof GAME_STATUSES];
+
+export type GameCubeType =
+  (typeof GAME_CUBES_TYPE)[keyof typeof GAME_CUBES_TYPE];
 
 export type GameCubeId = Branded<string, "GameBoardCubeId">;
 
@@ -30,6 +33,7 @@ export interface GameCube {
   id: GameCubeId;
   color: GameCubeColor;
   coords: GameCellCoords;
+  type: GameCubeType;
 }
 
 export interface GameConfig {
@@ -40,6 +44,8 @@ export interface GameConfig {
   scoresToWin: number;
   moveCount: number;
   mixCount: number;
+  cubesToSuper: number;
+  superBombRadius: number;
 }
 
 export type GameCubes = Array<GameCube>;
@@ -57,6 +63,8 @@ export type GameMixedBoard = Array<{
 }>;
 
 export type GameBurnedCubes = Array<GameCube>;
+
+export type GameSuperCubes = Array<GameCube>;
 
 export interface GameFalledCube {
   from: GameCellCoords;
