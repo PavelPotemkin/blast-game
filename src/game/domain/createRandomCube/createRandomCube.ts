@@ -11,5 +11,9 @@ export const createRandomCube = (
     return colors[getRandomInt(0, colors.length)];
   };
 
-  return createCube(coords, getRandomColor(avialableCubesColors), type);
+  return createCube({
+    coords,
+    color: getRandomColor(avialableCubesColors),
+    type,
+  });
 };

@@ -1,4 +1,4 @@
-import { GameBoardFilled } from "src/game/types";
+import { GameBoardFilled } from "../../types";
 
 export const logPrittyBoard = (board: GameBoardFilled) => {
   const cellStrLen = 6;

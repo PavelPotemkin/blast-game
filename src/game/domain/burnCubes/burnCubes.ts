@@ -7,7 +7,7 @@ import {
   GameCube,
   GameCubes,
 } from "../../types";
-import { GAME_CUBES_TYPE } from "src/game/constants";
+import { GAME_CUBES_TYPE } from "../../constants";
 
 function burnSuperCube(
   cube: GameCube,
@@ -132,5 +132,3 @@ export const burnCubes = (
     board: boardCopy as GameBoard,
   };
 };
-
-// todo loop ciibes burn

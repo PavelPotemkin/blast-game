@@ -1,4 +1,4 @@
-import { copyBoard, setCellByCoords } from "src/game/utils";
+import { copyBoard, setCellByCoords } from "../../utils";
 import {
   GameCubes,
   GameCellCoords,

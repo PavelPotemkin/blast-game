@@ -6,9 +6,6 @@
         "module": "ESNext",
         "lib": ["ESNext", "DOM"],
         "target": "ES6",
-        "moduleResolution": "node",
-        "paths": {
-            "src/*": ["./src/*"]
-        }
+        "moduleResolution": "node"
     }
 }

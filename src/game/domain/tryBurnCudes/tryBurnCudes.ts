@@ -1,7 +1,7 @@
 import { GameBoardFilled, GameConfig, GameCube } from "../../types";
 import { getCubesChain } from "../getCubesChain";
 import { burnCubes } from "../burnCubes";
-import { GAME_CUBES_TYPE } from "src/game/constants";
+import { GAME_CUBES_TYPE } from "../../constants";
 
 export const tryBurnCubes = (
   config: GameConfig,

@@ -1,4 +1,4 @@
-import { getCellByCoords } from "src/game/utils";
+import { getCellByCoords } from "../../utils";
 import { GameCubes, GameCellCoords, GameBoardFilled } from "../../types";
 import { getLinkedCubes } from "../getLinkedCubes";
 

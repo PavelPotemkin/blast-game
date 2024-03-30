@@ -22,7 +22,12 @@ export const fallCubes = (config: GameConfig, board: GameBoard) => {
           if (temp) {
             const from = { x, y: checkY };
             const to = { x, y: fallY };
-            const updatedCube = createCube(to, temp.color, temp.type);
+            const updatedCube = createCube({
+              id: temp.id,
+              coords: to,
+              color: temp.color,
+              type: temp.type,
+            });
 
             setCellByCoords(boardCopy, to, updatedCube);
             setCellByCoords(boardCopy, from, null);

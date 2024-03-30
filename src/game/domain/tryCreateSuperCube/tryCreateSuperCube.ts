@@ -37,11 +37,11 @@ export const tryCreateSuperCube = (
       cube.coords.x === clickCoords.x && cube.coords.y === clickCoords.y,
   );
 
-  const superCube = createCube(
-    burnedToSuperCube.coords,
-    burnedToSuperCube.color,
-    getRandomSuperCubeType(),
-  );
+  const superCube = createCube({
+    coords: burnedToSuperCube.coords,
+    color: burnedToSuperCube.color,
+    type: getRandomSuperCubeType(),
+  });
 
   const boardBurnedWithSuper = copyBoard(boardWithBurned);
   setCellByCoords(boardBurnedWithSuper, superCube.coords, superCube);

@@ -1,4 +1,4 @@
-import { getCellByCoords } from "src/game/utils";
+import { getCellByCoords } from "../../utils";
 import {
   fallCubes,
   fillEmptyCells,
@@ -23,7 +23,7 @@ import {
   ReadRemainingMoves,
   ReadMixCount,
 } from "../../ports.output";
-import { GAME_CUBES_TYPE } from "src/game/constants";
+import { GAME_CUBES_TYPE } from "../../constants";
 
 interface Deps {
   readScore: ReadScore;

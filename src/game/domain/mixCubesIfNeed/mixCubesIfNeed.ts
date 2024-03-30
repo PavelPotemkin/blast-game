@@ -59,7 +59,12 @@ export const mixCubesIfNeed = (
         const cube = getCellByCoords(prevBoard, fromCoords);
         const toCoords = randomCoords;
 
-        const newCube = createCube(toCoords, cube.color, cube.type);
+        const newCube = createCube({
+          id: cube.id,
+          coords: toCoords,
+          color: cube.color,
+          type: cube.type,
+        });
 
         newBoard[toCoords.y][toCoords.x] = newCube;
         newMixedBoard.push({

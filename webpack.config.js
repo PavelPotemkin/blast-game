@@ -23,9 +23,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.ts$/,
-        use: "ts-loader",
+        test: /\.(?:js|ts)$/,
         exclude: /node_modules/,
+        use: "babel-loader",
       },
       {
         test: /\.css$/i,
@@ -46,9 +46,6 @@ module.exports = {
   },
   resolve: {
     extensions: [".ts", ".js"],
-    alias: {
-      src: path.resolve(__dirname, "src"),
-    },
   },
   output: {
     filename: "[name].js",
