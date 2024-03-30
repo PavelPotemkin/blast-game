@@ -33,19 +33,9 @@ export class Game {
 
   private score: number;
   private status: GameStatus;
-  private config: GameConfig = {
-    boardRows: 9,
-    boardCols: 9,
-    cubeColorsCount: 5,
-    minChainLength: 4,
-    scoresToWin: 200,
-    moveCount: 20,
-    mixCount: 2,
-    cubesToSuper: 5,
-    superBombRadius: 2,
-  };
+  private config: GameConfig;
 
-  private remainingMoves = this.config.moveCount;
+  private remainingMoves: number;
 
   private startGame: StartGame;
   private clickCell: ClickCell;
@@ -53,7 +43,10 @@ export class Game {
   private gameBoardContainer: GameBoardContainer;
   private panelScoreContainer: GamePanelContainer;
 
-  constructor() {
+  constructor(config: GameConfig) {
+    this.config = config;
+    this.remainingMoves = config.moveCount;
+
     this.app = new Application();
 
     this.mainContainer = new Container();
